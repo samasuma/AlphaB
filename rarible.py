@@ -6,16 +6,20 @@ from threading import Thread
 import yaml
 from datetime import datetime
 import pytz
+from dotenv import load_dotenv
+import os
 
-def load_config():
-    with open('config.yml', 'r') as f:
-        return yaml.safe_load(f)
+# Load environment variables from .env file
+load_dotenv()
 
-config = load_config()
+# Access environment variables
+bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
+chat_id = os.getenv("TELEGRAM_CHAT_ID")
+coingecko_api_key = os.getenv("COINGECKO_API_KEY")
 
-bot_token = config['telegram']['bot_token']
-chat_id = config['telegram']['chat_id']
-coingecko_api_key = config['coingecko']['api_key']
+# Check if any of the required environment variables are missing
+if not (bot_token and chat_id and coingecko_api_key):
+    raise ValueError("One or more required environment variables are not set.")
 
 buy_price = 4.50  # Your buy price
 decrease_threshold = 0.94  # 6% decrease

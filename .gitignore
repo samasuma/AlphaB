@@ -3,3 +3,5 @@ config.yml
 
 #mac stuff 
 .DS_Store
+
+.env
